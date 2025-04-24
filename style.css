@@ -1,4 +1,15 @@
 :root {
+  :root {
+    /* Существующие переменные */
+    --main-color: #2ecc71;
+    --accent-color: #e74c3c;
+    
+    /* Новые переменные для темной темы */
+    --text-light: #ecf0f1;
+    --bg-dark: #1a1a1a;
+    --card-dark: #2d2d2d;
+    --border-dark: #444;
+  }
   --main-color: #4a6fa5;
   --text-color: #333; /* Основной цвет текста */
   --text-light: #64748b; /* Для второстепенного текста */
@@ -528,4 +539,114 @@ input:focus + .green-label {
   background-clip: text;
   color: transparent;
   font-weight: 700;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: var(--text-light);
+    --bg-color: var(--bg-dark);
+    --card-color: var(--card-dark);
+  }
+  
+  body {
+    color: var(--text-light);
+    background-color: var(--bg-dark);
+  }
+  
+  input, select, textarea {
+    background-color: var(--card-dark);
+    color: var(--text-light);
+    border-color: var(--border-dark);
+  }
+  
+  .entry, .workout {
+    background-color: var(--card-dark);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+}
+/* Принудительная темная тема */
+body.force-dark {
+  --text-color: var(--text-light) !important;
+  --bg-color: var(--bg-dark) !important;
+  --card-color: var(--card-dark) !important;
+}
+
+/* Стили для кнопки переключения */
+#theme-toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--main-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+/* Принудительная темная тема */
+body.force-dark {
+  --text-color: var(--text-light) !important;
+  --bg-color: var(--bg-dark) !important;
+  --card-color: var(--card-dark) !important;
+}
+
+/* Стили для кнопки переключения */
+#theme-toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--main-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+/* ===== КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===== */
+#theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--main-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1);
+  background: #27ae60;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 600px) {
+  #theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+/* Принудительная темная тема */
+body.force-dark {
+  --text-color: #f0f0f0 !important;
+  --bg-color: #1a1a1a !important;
+  --card-color: #2d2d2d !important;
+}
+
+body.force-dark input,
+body.force-dark select,
+body.force-dark textarea {
+  background-color: #333 !important;
+  color: white !important;
+  border-color: #555 !important;
 }

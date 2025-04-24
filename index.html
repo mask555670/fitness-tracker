@@ -1,66 +1,371 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <!-- Метатег для мобильных устройств -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Иконка для главного экрана -->
-<link rel="apple-touch-icon" href="icon.png">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Фитнес-Трекер PRO</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FITNESS PRO | Трекер прогресса</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --danger: #e74c3c;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark);
+            color: var(--light);
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                              url('https://i.pinimg.com/736x/91/cf/4a/91cf4a043f3fe88c102a005e8ebeed9f.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--card-dark);
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            position: relative;
+            transition: all 0.3s;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-dark);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .history-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .entry, .workout {
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .entry:hover, .workout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .entry-header, .workout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .entry-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .set-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .sets-container {
+            margin: 1.5rem 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .set {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+        }
+
+        .exercises-container {
+            margin: 1.5rem 0;
+        }
+
+        .exercise {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-dumbbell"></i> Мой Фитнес-Трекер</h1>
+        <header>
+            <h1><i class="fas fa-dumbbell"></i> FITNESS PRO</h1>
+            <p>Трекер вашего прогресса</p>
+        </header>
         
-        <!-- Вкладки -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="progress">Мой прогресс</button>
+            <button class="tab-btn active" data-tab="progress">Прогресс</button>
             <button class="tab-btn" data-tab="workouts">Тренировки</button>
         </div>
         
-        <!-- Вкладка прогресса -->
         <div id="progress" class="tab-content active">
-            <form id="progress-form">
-                <label><i class="fas fa-calendar-day"></i> Дата: <input type="date" id="date" required></label>
-                <label><i class="fas fa-weight"></i> Вес (кг): <input type="number" id="weight" step="0.1" required></label>
-                <label><i class="fas fa-ruler-combined"></i> Грудь (см): <input type="number" id="chest" step="0.1"></label>
-                <label><i class="fas fa-ruler-combined"></i> Талия (см): <input type="number" id="waist" step="0.1"></label>
-                <button type="submit"><i class="fas fa-save"></i> Сохранить</button>
-            </form>
+            <div class="card">
+                <form id="progress-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-day"></i> Дата:</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-weight"></i> Вес (кг):</label>
+                            <input type="number" id="weight" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-ruler-combined"></i> Грудь (см):</label>
+                            <input type="number" id="chest" step="0.1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-ruler-combined"></i> Талия (см):</label>
+                            <input type="number" id="waist" step="0.1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-ruler-combined"></i> Бицепс (см):</label>
+                            <input type="number" id="biceps" step="0.1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-ruler-combined"></i> Бедро (см):</label>
+                            <input type="number" id="thigh" step="0.1">
+                        </div>
+                    </div>
+                    
+                    <button type="submit"><i class="fas fa-save"></i> Сохранить замеры</button>
+                </form>
+            </div>
+            
+            <h2 class="history-title"><i class="fas fa-history"></i> История замеров</h2>
             <div id="progress-list"></div>
         </div>
         
-        <!-- Вкладка тренировок -->
         <div id="workouts" class="tab-content">
-            <form id="workout-form">
-                <label><i class="fas fa-calendar-day"></i> Дата: <input type="date" id="workout-date" required></label>
-                <label><i class="fas fa-running"></i> Тип тренировки:
-                    <select id="workout-type" required>
-                        <option value="strength">Силовая</option>
-                        <option value="cardio">Кардио</option>
-                        <option value="stretching">Растяжка</option>
-                    </select>
-                </label>
-                <label><i class="fas fa-tasks"></i> Упражнение: <input type="text" id="exercise" required></label>
-                <div id="sets-container">
-                    <!-- Сюда добавляются подходы -->
-                </div>
-                <button type="submit" id="add-set-btn" class="active-btn">
-                    <i class="fas fa-plus"></i> Добавить подход
-                </button>
-                <button type="submit"><i class="fas fa-check-circle"></i> Сохранить тренировку</button>
-            </form>
+            <div class="card">
+                <form id="workout-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-day"></i> Дата тренировки:</label>
+                        <input type="date" id="workout-date" required>
+                    </div>
+                    
+                    <div id="exercises-container" class="exercises-container">
+                        <!-- Сюда добавляются упражнения -->
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button type="button" id="add-exercise-btn" class="btn-outline">
+                            <i class="fas fa-plus-circle"></i> Добавить упражнение
+                        </button>
+                        <button type="submit">
+                            <i class="fas fa-check"></i> Сохранить тренировку
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <h2 class="history-title"><i class="fas fa-dumbbell"></i> История тренировок</h2>
             <div id="workouts-list"></div>
         </div>
-        
-        <!-- Мотивация и статистика -->
-        <div class="motivation"></div>
-        <div id="stats"></div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
