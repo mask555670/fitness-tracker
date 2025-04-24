@@ -666,3 +666,32 @@ body.force-dark textarea {
       grid-template-columns: 1fr !important;
   }
 }
+/* Добавьте в самый конец файла */
+@media (max-width: 480px) {
+  .set {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      padding: 0.5rem;
+  }
+  
+  .set span {
+      display: none; /* Скрываем текст "Подход X" */
+  }
+  
+  .set input {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 14px;
+  }
+  
+  .set input::placeholder {
+      font-size: 12px;
+  }
+  
+  .set .remove-set {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      background: transparent;
+  }
+}

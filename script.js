@@ -156,14 +156,15 @@ document.addEventListener('DOMContentLoaded', function() {
         setDiv.className = 'set';
         setDiv.dataset.id = setId;
         setDiv.innerHTML = `
-            <span>Подход ${setsContainer.children.length + 1}</span>
-            <input type="number" placeholder="Вес (кг)" step="0.1" class="set-weight">
-            <input type="number" placeholder="Повторения" min="1" class="set-reps">
-            <button type="button" class="remove-set" data-id="${setId}">
-                <i class="fas fa-times"></i>
-            </button>
+            <div style="position: relative;">
+                <input type="number" placeholder="Вес (кг)" step="0.1" class="set-weight">
+                <input type="number" placeholder="Повторения" min="1" class="set-reps">
+                <button type="button" class="remove-set" data-id="${setId}">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         `;
-
+    
         setsContainer.appendChild(setDiv);
         
         // Обработчик удаления подхода
