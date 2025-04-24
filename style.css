@@ -650,3 +650,19 @@ body.force-dark textarea {
   color: white !important;
   border-color: #555 !important;
 }
+/* Для iPhone и маленьких экранов */
+@media (max-width: 480px) {
+  #workout-form > div:last-child {
+      flex-direction: column;
+  }
+  
+  #workout-form > div:last-child button {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.8rem;
+  }
+  
+  .set {
+      grid-template-columns: 1fr !important;
+  }
+}
