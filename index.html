@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Метатег для мобильных устройств -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Иконка для главного экрана -->
+<link rel="apple-touch-icon" href="icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Фитнес-Трекер PRO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-dumbbell"></i> Мой Фитнес-Трекер</h1>
+        
+        <!-- Вкладки -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="progress">Мой прогресс</button>
+            <button class="tab-btn" data-tab="workouts">Тренировки</button>
+        </div>
+        
+        <!-- Вкладка прогресса -->
+        <div id="progress" class="tab-content active">
+            <form id="progress-form">
+                <label><i class="fas fa-calendar-day"></i> Дата: <input type="date" id="date" required></label>
+                <label><i class="fas fa-weight"></i> Вес (кг): <input type="number" id="weight" step="0.1" required></label>
+                <label><i class="fas fa-ruler-combined"></i> Грудь (см): <input type="number" id="chest" step="0.1"></label>
+                <label><i class="fas fa-ruler-combined"></i> Талия (см): <input type="number" id="waist" step="0.1"></label>
+                <button type="submit"><i class="fas fa-save"></i> Сохранить</button>
+            </form>
+            <div id="progress-list"></div>
+        </div>
+        
+        <!-- Вкладка тренировок -->
+        <div id="workouts" class="tab-content">
+            <form id="workout-form">
+                <label><i class="fas fa-calendar-day"></i> Дата: <input type="date" id="workout-date" required></label>
+                <label><i class="fas fa-running"></i> Тип тренировки:
+                    <select id="workout-type" required>
+                        <option value="strength">Силовая</option>
+                        <option value="cardio">Кардио</option>
+                        <option value="stretching">Растяжка</option>
+                    </select>
+                </label>
+                <label><i class="fas fa-tasks"></i> Упражнение: <input type="text" id="exercise" required></label>
+                <div id="sets-container">
+                    <!-- Сюда добавляются подходы -->
+                </div>
+                <button type="submit" id="add-set-btn" class="active-btn">
+                    <i class="fas fa-plus"></i> Добавить подход
+                </button>
+                <button type="submit"><i class="fas fa-check-circle"></i> Сохранить тренировку</button>
+            </form>
+            <div id="workouts-list"></div>
+        </div>
+        
+        <!-- Мотивация и статистика -->
+        <div class="motivation"></div>
+        <div id="stats"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
