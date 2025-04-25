@@ -1,739 +1,309 @@
 :root {
-  :root {
-    /* Существующие переменные */
-    --main-color: #2ecc71;
-    --accent-color: #e74c3c;
-    
-    /* Новые переменные для темной темы */
-    --text-light: #ecf0f1;
-    --bg-dark: #1a1a1a;
-    --card-dark: #2d2d2d;
-    --border-dark: #444;
-  }
-  --main-color: #4a6fa5;
-  --text-color: #333; /* Основной цвет текста */
-  --text-light: #64748b; /* Для второстепенного текста */
-  --bg-color: white;
-  --input-bg: white;
+  --primary: #4361ee;
+  --secondary: #3f37c9;
+  --accent: #4895ef;
+  --success: #4cc9f0;
+  --danger: #f72585;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --gray: #6c757d;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-      --text-color: #f0f0f0;
-      --text-light: #94a3b8;
-      --bg-color: #1e1e1e;
-      --input-bg: #2d2d2d;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-  color: var(--text-color);
-  background-color: var(--bg-color);
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+              url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  line-height: 1.6;
 }
 
-input, select {
-  background-color: var(--input-bg);
-  color: var(--text-color);
-}
-:root {
-    --main-color: #4a6fa5;
-    --accent-color: #ff6b6b;
-    --light-bg: #f8f9fa;
-  }
-  
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--light-bg);
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 25px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  
-  h1 {
-    color: var(--main-color);
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 2.2rem;
-    position: relative;
-  }
-  
-  h1::after {
-    content: "";
-    display: block;
-    width: 100px;
-    height: 4px;
-    background: var(--accent-color);
-    margin: 10px auto;
-    border-radius: 2px;
-  }
-  
-  form {
-    display: grid;
-    gap: 15px;
-    margin-bottom: 30px;
-    background: #f8fafc;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-  }
-  
-  label {
-    display: grid;
-    gap: 5px;
-    font-weight: 500;
-  }
-  
-  input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border 0.3s;
-  }
-  
-  input:focus {
-    outline: none;
-    border-color: var(--main-color);
-    box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
-  }
-  
-  button {
-    padding: 12px;
-    background: var(--main-color);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  button:hover {
-    background: #3a5a8f;
-    transform: translateY(-2px);
-  }
-  
-  #progress-list {
-    display: grid;
-    gap: 10px;
-  }
-  
-  .entry {
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-left: 4px solid var(--accent-color);
-    transition: transform 0.2s;
-  }
-  
-  .entry:hover {
-    transform: translateX(5px);
-  }
-  
-  .entry-info {
-    flex-grow: 1;
-  }
-  
-  .entry button {
-    background: var(--accent-color);
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-  
-  .entry button:hover {
-    background: #e05555;
-  }
-  
-  .motivation {
-    text-align: center;
-    margin: 25px 0;
-    padding: 15px;
-    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-    color: white;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 18px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
-  
-  .progress-bar {
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 4px;
-    margin: 20px 0;
-    overflow: hidden;
-  }
-  
-  .progress {
-    height: 100%;
-    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-    width: 0%;
-    transition: width 0.5s ease;
-  }
-  @media (prefers-color-scheme: dark) {
-    body {
-      background: #121212;
-      color: #f0f0f0;
-    }
-    .container {
-      background: #1e1e1e;
-    }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .entry {
-    animation: fadeIn 0.3s ease-out;
-  }
-  /* ==================== АНИМАЦИИ ==================== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes progressBar {
-  from {
-    width: 0;
-  }
-  to {
-    width: var(--progress-width, 100%);
-  }
-}
-/* Для новых записей */
-.entry {
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-/* Для кнопки сохранения при наведении */
-button:hover {
-  animation: pulse 0.5s ease infinite;
-}
-
-/* Для прогресс-бара */
-.progress {
-  animation: progressBar 1.5s ease-out forwards;
-}
-/* Плавные переходы для интерактивных элементов */
-button, input, .entry {
-  transition: all 0.3s ease;
-}
-
-/* Эффект при клике на кнопку */
-button:active {
-  transform: scale(0.98);
-}
-/* ===== ВКЛАДКИ ===== */
-.tabs {
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 20px;
+  border-radius: var(--border-radius);
   margin-bottom: 20px;
-  border-bottom: 2px solid #e2e8f0;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+}
+
+.progress-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: white;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.motivation-text {
+  font-style: italic;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+.nav-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
 }
 
 .tab-btn {
-  padding: 10px 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  color: #64748b;
-  position: relative;
-  transition: all 0.3s;
-}
-
-.tab-btn.active {
-  color: var(--main-color);
-}
-
-.tab-btn.active::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--main-color);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* ===== ФОРМА ТРЕНИРОВОК ===== */
-#workout-form {
-  grid-template-columns: 1fr 1fr;
-}
-
-#workout-form label {
-  grid-column: span 1;
-}
-
-#sets-container {
-  grid-column: span 2;
-  display: grid;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.set {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 10px;
-  background: #f1f5f9;
-  border-radius: 6px;
-}
-
-.set input {
   flex: 1;
-  max-width: 80px;
-}
-
-/* ===== СПИСОК ТРЕНИРОВОК ===== */
-.workout {
-  background: white;
-  border-radius: 8px;
   padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  border-left: 4px solid var(--accent-color);
-}
-
-.workout-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-weight: 600;
-  color: var(--main-color);
-}
-
-.workout-exercise {
+  border: none;
+  background: none;
+  cursor: pointer;
   font-weight: 500;
-  margin: 5px 0;
+  color: var(--gray);
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
-.workout-sets {
-  margin-top: 10px;
-}
-
-.set-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px dashed #e2e8f0;
-}
-
-/* Иконки для типов тренировок */
-.workout-type-icon {
-  margin-right: 5px;
-}
-
-.strength { color: #4f46e5; }
-.cardio { color: #10b981; }
-.stretching { color: #f59e0b; }
-/* Убедитесь что эти стили есть */
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-  animation: fadeIn 0.3s ease-out;
-}
-/* Стили для всех полей ввода */
-input, select {
-  padding: 12px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: white;
-  color: #333; /* Цвет текста */
-  transition: all 0.3s;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 5px;
-}
-
-/* Стиль для placeholder */
-input::placeholder {
-  color: #94a3b8; /* Сероватый цвет для подсказок */
-  opacity: 1;
-}
-
-/* Стиль при фокусе */
-input:focus, select:focus {
-  border-color: var(--main-color);
-  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
-  outline: none;
-}
-
-/* Темная тема для полей */
-@media (prefers-color-scheme: dark) {
-  input, select {
-      background-color: #1e1e1e;
-      color: #f0f0f0;
-      border-color: #444;
-  }
-  
-  input::placeholder {
-      color: #777;
-  }
-}
-label {
-  display: block;
-  margin-bottom: 15px;
-  font-weight: 600;
-  color: #333; /* Темный цвет для подписей */
-}
-
-/* Для темной темы */
-@media (prefers-color-scheme: dark) {
-  label {
-      color: #f0f0f0;
-  }
-}
-input {
-  color: #333 !important;
-  background: white !important;
-}
-/* Явно задаем контрастные цвета */
-input, select, textarea {
-  color: #000000 !important; /* Черный текст */
-  background-color: #ffffff !important; /* Белый фон */
-  border: 2px solid #4a6fa5 !important; /* Синяя рамка */
-}
-
-/* Подписи полей */
-label {
-  color: #2d3748 !important; /* Темно-серый */
-  font-weight: 700 !important;
-}
-
-/* Плейсхолдеры (подсказки) */
-input::placeholder {
-  color: #718096 !important; /* Серый */
-  opacity: 1 !important;
-}
-
-/* Для темной темы явно переопределяем */
-@media (prefers-color-scheme: dark) {
-  input, select {
-      color: #ffffff !important;
-      background-color: #1a202c !important;
-  }
-  label {
-      color: #e2e8f0 !important;
-  }
-}
-.input-label {
-  display: block;
-  margin-bottom: 20px;
-}
-
-.label-text {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #2d3748; /* Темно-серый */
-  font-weight: 600;
-}
-
-.input-field {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #cbd5e0;
-  border-radius: 8px;
-  font-size: 16px;
-  background: #ffffff;
-  color: #000000;
-}
-
-/* Для мобильных устройств */
-@media (max-width: 480px) {
-  .label-text {
-      font-size: 14px;
-  }
-  .input-field {
-      padding: 10px;
-  }
-}
-/* Основной зелёный цвет для подписей */
-label {
-  color: #2ecc71 !important; /* Яркий зелёный */
-  font-weight: 600;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
-}
-
-/* Стили для иконок в подписях */
-label i.fas {
-  color: #27ae60 !important; /* Тёмно-зелёный */
+.tab-btn i {
   margin-right: 8px;
 }
 
-/* Для тёмной темы */
-@media (prefers-color-scheme: dark) {
-  label {
-      color: #2ecc71 !important;
-  }
-  label i.fas {
-      color: #27ae60 !important;
-  }
-}
-.green-label {
-  color: #2ecc71;
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom: 3px solid var(--primary);
   font-weight: 600;
-  display: inline-block;
-  margin-right: 10px;
 }
 
-/* Анимация при фокусе */
-input:focus + .green-label {
-  text-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
-  transition: all 0.3s ease;
-}
-/* Градиентные подписи */
-.label-gradient {
-  background: linear-gradient(90deg, #2ecc71, #27ae60);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-weight: 700;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: var(--text-light);
-    --bg-color: var(--bg-dark);
-    --card-color: var(--card-dark);
-  }
-  
-  body {
-    color: var(--text-light);
-    background-color: var(--bg-dark);
-  }
-  
-  input, select, textarea {
-    background-color: var(--card-dark);
-    color: var(--text-light);
-    border-color: var(--border-dark);
-  }
-  
-  .entry, .workout {
-    background-color: var(--card-dark);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  }
-}
-/* Принудительная темная тема */
-body.force-dark {
-  --text-color: var(--text-light) !important;
-  --bg-color: var(--bg-dark) !important;
-  --card-color: var(--card-dark) !important;
+.tab-content {
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  box-shadow: var(--box-shadow);
+  color: var(--dark);
 }
 
-/* Стили для кнопки переключения */
-#theme-toggle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--main-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-}
-/* Принудительная темная тема */
-body.force-dark {
-  --text-color: var(--text-light) !important;
-  --bg-color: var(--bg-dark) !important;
-  --card-color: var(--card-dark) !important;
+.tab-content.active {
+  display: block;
 }
 
-/* Стили для кнопки переключения */
-#theme-toggle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--main-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-}
-/* ===== КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===== */
-#theme-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--main-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-  transition: all 0.3s ease;
+.form-group {
+  margin-bottom: 15px;
 }
 
-#theme-toggle:hover {
-  transform: scale(1.1);
-  background: #27ae60;
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--dark);
 }
 
-/* Для мобильных устройств */
-@media (max-width: 600px) {
-  #theme-toggle {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-    bottom: 15px;
-    right: 15px;
-  }
-}
-
-/* Принудительная темная тема */
-body.force-dark {
-  --text-color: #f0f0f0 !important;
-  --bg-color: #1a1a1a !important;
-  --card-color: #2d2d2d !important;
-}
-
-body.force-dark input,
-body.force-dark select,
-body.force-dark textarea {
-  background-color: #333 !important;
-  color: white !important;
-  border-color: #555 !important;
-}
-/* Для iPhone и маленьких экранов */
-@media (max-width: 480px) {
-  #workout-form > div:last-child {
-      flex-direction: column;
-  }
-  
-  #workout-form > div:last-child button {
-      width: 100%;
-      margin-bottom: 0.5rem;
-      padding: 0.8rem;
-  }
-  
-  .set {
-      grid-template-columns: 1fr !important;
-  }
-}
-/* Добавьте в самый конец файла */
-@media (max-width: 480px) {
-  .set {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-      padding: 0.5rem;
-  }
-  
-  .set span {
-      display: none; /* Скрываем текст "Подход X" */
-  }
-  
-  .set input {
-      width: 100%;
-      padding: 0.6rem;
-      font-size: 14px;
-  }
-  
-  .set input::placeholder {
-      font-size: 12px;
-  }
-  
-  .set .remove-set {
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      background: transparent;
-  }
-}
-/* Стили для системы авторизации */
-#auth-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-#auth-container .card {
-  width: 90%;
-  max-width: 400px;
-  animation: fadeIn 0.3s;
-}
-
-#auth-container input {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 12px;
-  margin-bottom: 10px;
-  border: 2px solid var(--primary);
-  border-radius: 8px;
-  background: rgba(255,255,255,0.1);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.submit-btn, .add-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  background-color: var(--primary);
   color: white;
 }
 
-#logout-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
+.submit-btn:hover {
+  background-color: var(--secondary);
+}
+
+.add-btn {
+  background-color: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.add-btn:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+.measurements-list, .workouts-list {
+  margin-top: 30px;
+}
+
+.measurements-list h2, .workouts-list h2 {
+  margin-bottom: 15px;
+  color: var(--dark);
+}
+
+#measurements-list, #workouts-list {
+  list-style: none;
+}
+
+#measurements-list li, #workouts-list li {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.measurement-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.measurement-values span {
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+
+.measurement-date, .workout-date {
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.exercise {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.exercise input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+}
+
+.remove-exercise-btn {
   background: var(--danger);
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  z-index: 100;
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 5px;
+}
+
+.stat-card p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 15px;
+  color: white;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .app-container {
+      padding: 10px;
+  }
+  
+  .tab-btn {
+      padding: 12px 5px;
+      font-size: 0.8rem;
+  }
+  
+  .tab-content {
+      padding: 15px;
+  }
+  
+  .exercise {
+      flex-direction: column;
+      gap: 5px;
+  }
+  
+  .stats-cards {
+      grid-template-columns: 1fr;
+  }
+  
+  .measurement-values {
+      grid-template-columns: 1fr 1fr;
+  }
 }
