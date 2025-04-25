@@ -695,3 +695,45 @@ body.force-dark textarea {
       background: transparent;
   }
 }
+/* Стили для системы авторизации */
+#auth-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#auth-container .card {
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 0.3s;
+}
+
+#auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+#logout-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 100;
+}

@@ -284,6 +284,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="auth-container" style="display: none;">
+        <div class="card" style="max-width: 400px; margin: 50px auto;">
+          <h2 style="text-align: center;"><i class="fas fa-user"></i> Вход/Регистрация</h2>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="text" id="username" placeholder="Придумайте логин" style="width: 100%;">
+            <input type="password" id="password" placeholder="Придумайте пароль" style="width: 100%;">
+            <button id="register-btn" style="width: 100%;">Зарегистрироваться</button>
+            <button id="login-btn" class="btn-outline" style="width: 100%;">Войти</button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="app-content" style="display: none;">
+        <!-- Весь существующий контейнер переносим сюда -->
+        <div class="container">
+          ...
+        </div>
+        <button id="logout-btn" style="position: fixed; bottom: 20px; left: 20px;">
+          <i class="fas fa-sign-out-alt"></i> Выйти
+        </button>
+      </div>
     <div class="container">
         <header>
             <h1><i class="fas fa-dumbbell"></i> FITNESS PRO</h1>
@@ -371,5 +392,20 @@
     </div>
 
     <script src="script.js"></script>
+    <button id="logout-btn" style="display: none;">
+        <i class="fas fa-sign-out-alt"></i> Выйти
+      </button>
+      
+      <script>
+        // Обработчик выхода
+        document.getElementById('logout-btn').addEventListener('click', () => {
+          if (confirm('Выйти из аккаунта?')) {
+            currentUser = null;
+            authContainer.style.display = 'flex';
+            appContent.style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'none';
+          }
+        });
+      </script>
 </body>
 </html>

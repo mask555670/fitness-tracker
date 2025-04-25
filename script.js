@@ -1,3 +1,85 @@
+/*** Система авторизации ***/
+const authContainer = document.getElementById('auth-container');
+const appContent = document.getElementById('app-content');
+const registerBtn = document.getElementById('register-btn');
+const loginBtn = document.getElementById('login-btn');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+let currentUser = null;
+
+// Показываем форму авторизации при загрузке
+authContainer.style.display = 'block';
+appContent.style.display = 'none';
+
+// Регистрация нового пользователя
+registerBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+    
+    if (username.length < 3) {
+      alert('Логин должен быть не менее 3 символов');
+      return;
+    }
+    
+    if (password.length < 4) {
+      alert('Пароль должен быть не менее 4 символов');
+      return;
+    }
+    
+    if (localStorage.getItem(`user_${username}`)) {
+      alert('Этот логин уже занят');
+      return;
+    }
+    
+    localStorage.setItem(`user_${username}`, JSON.stringify({
+      password: password,
+      data: { entries: [], workouts: [] }
+    }));
+    
+    alert('Регистрация успешна! Теперь войдите');
+    usernameInput.value = '';
+    passwordInput.value = '';
+  });
+  
+  // Вход пользователя
+  loginBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+    const userData = localStorage.getItem(`user_${username}`);
+    
+    if (!userData) {
+      alert('Пользователь не найден');
+      return;
+    }
+    
+    const user = JSON.parse(userData);
+    
+    if (user.password !== password) {
+      alert('Неверный пароль');
+      return;
+    }
+    
+    currentUser = username;
+    authContainer.style.display = 'none';
+    appContent.style.display = 'block';
+    loadUserData();
+  });
+  
+  // Функции работы с данными пользователя
+  function loadUserData() {
+    const userData = JSON.parse(localStorage.getItem(`user_${currentUser}`));
+    entries = userData.data.entries || [];
+    workouts = userData.data.workouts || [];
+    renderEntries();
+    renderWorkouts();
+  }
+  
+  function saveUserData() {
+    const userData = JSON.parse(localStorage.getItem(`user_${currentUser}`));
+    userData.data = { entries, workouts };
+    localStorage.setItem(`user_${currentUser}`, JSON.stringify(userData));
+  }
+
 document.addEventListener('DOMContentLoaded', function() {
     // Проверка поддержки localStorage
     if (typeof(Storage) === "undefined") {
@@ -19,14 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressList = document.getElementById('progress-list');
     const workoutsList = document.getElementById('workouts-list');
 
-    // Инициализация при загрузке
-    loadData();
+    // Инициализация при загрузке()
+    function loadUserData() {
     renderEntries();
     renderWorkouts();
     setupEventListeners();
+    }
 
     // ===== ФУНКЦИИ =====
-    function loadData() {
+    function loadUserData() {
         const savedEntries = localStorage.getItem('fitnessEntries');
         const savedWorkouts = localStorage.getItem('workouts');
         
@@ -34,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedWorkouts) workouts = JSON.parse(savedWorkouts);
     }
 
-    function saveData() {
+    function saveUserData() {
         try {
             localStorage.setItem('fitnessEntries', JSON.stringify(entries));
             localStorage.setItem('workouts', JSON.stringify(workouts));
@@ -105,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         entries.push(newEntry);
-        saveData();
+        saveUserData();
         progressForm.reset();
         renderEntries();
         alert("Замеры успешно сохранены!");
@@ -237,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         workouts.push(newWorkout);
-        saveData();
+        saveUserData();
         workoutForm.reset();
         exercisesContainer.innerHTML = '';
         renderWorkouts();
