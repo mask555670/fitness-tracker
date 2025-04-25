@@ -94,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
             chest: parseFloat(document.getElementById('chest').value) || 0,
             waist: parseFloat(document.getElementById('waist').value) || 0,
             biceps: parseFloat(document.getElementById('biceps').value) || 0,
-            thigh: parseFloat(document.getElementById('thigh').value) || 0
+            thigh: parseFloat(document.getElementById('thigh').value) || 0,
+            glutes: parseFloat(document.getElementById('glutes').value) || 0 // ← Добавьте эту строку
+        
         };
 
         if (!newEntry.date) {
@@ -266,6 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div><i class="fas fa-ruler-combined"></i> Талия: <strong>${entry.waist} см</strong></div>
                     <div><i class="fas fa-ruler-combined"></i> Бицепс: <strong>${entry.biceps} см</strong></div>
                     <div><i class="fas fa-ruler-combined"></i> Бедро: <strong>${entry.thigh} см</strong></div>
+                    <div><i class="fas fa-ruler-combined"></i> Ягодицы: <strong>${entry.glutes} см</strong></div> <!-- Добавьте эту строку -->
                 </div>
             `;
             progressList.appendChild(entryDiv);
