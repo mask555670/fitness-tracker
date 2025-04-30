@@ -575,38 +575,35 @@
             <div class="page" id="workouts-page">
                 <div class="tab-content" id="workouts">
                     <div class="calendar-container">
-                        <div class="calendar-header">
-                            <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
-                            <h3 id="current-month">Месяц Год</h3>
-                            <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                        <div class="workout-details" id="workout-details">
+                            <h3>Детали тренировки</h3>
+                            <div id="selected-workout-info"></div>
                         </div>
-                        <div class="calendar-grid" id="calendar-grid">
-                            <!-- Календарь будет заполнен через JavaScript -->
-                        </div>
+                        <form id="workout-form">
+                            <div class="form-group">
+                                <label for="workout-date">Дата тренировки</label>
+                                <input type="date" id="workout-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="workout-name">Название тренировки</label>
+                                <input type="text" id="workout-name" placeholder="Например: Грудь и трицепс" required>
+                            </div>
+                            <button type="submit">
+                                <i class="fas fa-plus"></i>
+                                Создать тренировку
+                            </button>
+                        </form>
                     </div>
+
                     <div class="workout-details" id="workout-details">
                         <h3>Детали тренировки</h3>
                         <div id="selected-workout-info"></div>
                     </div>
-                    <form id="workout-form">
-                        <div class="form-group">
-                            <label for="workout-date">Дата тренировки</label>
-                            <input type="date" id="workout-date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="workout-name">Название тренировки</label>
-                            <input type="text" id="workout-name" placeholder="Например: Грудь и трицепс" required>
-                        </div>
-                        <button type="submit">
-                            <i class="fas fa-plus"></i>
-                            Создать тренировку
-                        </button>
-                    </form>
-                </div>
 
-                <div class="card">
-                    <h2><i class="fas fa-dumbbell"></i> Мои тренировки</h2>
-                    <div id="workouts-list"></div>
+                    <div class="card">
+                        <h2><i class="fas fa-dumbbell"></i> Мои тренировки</h2>
+                        <div id="workouts-list"></div>
+                    </div>
                 </div>
             </div>
 
