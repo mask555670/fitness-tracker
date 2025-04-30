@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Проверка поддержки localStorage
     if (!window.localStorage) {
-        alert('Ваш браузер не поддерживает localStorage. Данные не будут сохранены.');
+        alert('Your browser does not support localStorage. Data will not be saved.');
     }
 
     // DOM элементы
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="workout-type">${getWorkoutTypeName(workout.type)}</span>
                         <ul class="workout-exercises">
                             ${workout.exercises.map(ex => `
-                                <li>${ex.name}: ${ex.sets} × ${ex.reps} ${ex.weight > 0 ? `(${ex.weight} кг)` : ''}</li>
+                                <li>${ex.name}: ${ex.sets} × ${ex.reps} ${ex.weight > 0 ? `(${ex.weight} kg)` : ''}</li>
                             `).join('')}
                         </ul>
                     </div>
@@ -333,20 +333,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateStats() {
         if (measurements.length > 0) {
             const lastMeasurement = measurements[measurements.length - 1];
-            lastWeightElement.textContent = `${lastMeasurement.weight} кг`;
+            lastWeightElement.textContent = `${lastMeasurement.weight} kg`;
             
             if (measurements.length > 1) {
                 const firstMeasurement = measurements[0];
                 const weightDiff = (lastMeasurement.weight - firstMeasurement.weight).toFixed(1);
                 
                 if (weightDiff > 0) {
-                    weightChangeElement.textContent = `+${weightDiff} кг`;
+                    weightChangeElement.textContent = `+${weightDiff} kg`;
                     weightChangeElement.style.color = 'var(--danger)';
                 } else if (weightDiff < 0) {
-                    weightChangeElement.textContent = `${weightDiff} кг`;
+                    weightChangeElement.textContent = `${weightDiff} kg`;
                     weightChangeElement.style.color = 'var(--success)';
                 } else {
-                    weightChangeElement.textContent = '0 кг';
+                    weightChangeElement.textContent = '0 kg';
                     weightChangeElement.style.color = 'var(--gray)';
                 }
             } else {
@@ -463,9 +463,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getWorkoutTypeName(type) {
         const types = {
-            strength: 'Силовая',
-            cardio: 'Кардио',
-            flexibility: 'Гибкость'
+            strength: 'Strength',
+            cardio: 'Cardio',
+            flexibility: 'Flexibility'
         };
         
         return types[type] || type;
@@ -596,13 +596,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.getElementById('notifications').appendChild(notification);
         
-        // Автоматическое скрытие через 3 секунды
+        // Auto-hide after 3 seconds
         setTimeout(() => {
             notification.style.transform = 'translateX(120%)';
             setTimeout(() => notification.remove(), 300);
         }, 3000);
         
-        // Закрытие по клику
+        // Close on click
         notification.addEventListener('click', () => {
             notification.style.transform = 'translateX(120%)';
             setTimeout(() => notification.remove(), 300);
