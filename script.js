@@ -20,11 +20,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const weightChangeElement = document.getElementById('weight-change');
     const totalWorkoutsElement = document.getElementById('total-workouts');
     const progressChartCanvas = document.getElementById('progress-chart');
-
+    
+    // Элементы календаря
+    const calendarGrid = document.getElementById('calendar-grid');
+    const currentMonthElement = document.getElementById('current-month');
+    const prevMonthBtn = document.getElementById('prev-month');
+    const nextMonthBtn = document.getElementById('next-month');
+    const selectedWorkoutInfo = document.getElementById('selected-workout-info');
+    
     // Данные приложения
     let measurements = JSON.parse(localStorage.getItem('fitnessMeasurements')) || [];
     let workouts = JSON.parse(localStorage.getItem('fitnessWorkouts')) || [];
     let progressChart = null;
+    let currentDate = new Date();
+    let selectedDate = null;
 
     // Мотивирующие сообщения
     const motivationMessages = [
@@ -73,24 +82,47 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Показать случайное мотивирующее сообщение
         showRandomMotivation();
+        
+        renderCalendar();
     }
 
     function loadData() {
-        const savedMeasurements = localStorage.getItem('fitnessMeasurements');
-        const savedWorkouts = localStorage.getItem('fitnessWorkouts');
+        toggleLoader(true);
         
-        if (savedMeasurements) {
-            measurements = JSON.parse(savedMeasurements);
-        }
-        
-        if (savedWorkouts) {
-            workouts = JSON.parse(savedWorkouts);
+        try {
+            const savedMeasurements = localStorage.getItem('fitnessMeasurements');
+            const savedWorkouts = localStorage.getItem('fitnessWorkouts');
+            
+            if (savedMeasurements) {
+                measurements = JSON.parse(savedMeasurements);
+            }
+            
+            if (savedWorkouts) {
+                workouts = JSON.parse(savedWorkouts);
+            }
+            
+            showNotification('Данные успешно загружены', 'success');
+        } catch (error) {
+            showNotification('Ошибка при загрузке данных', 'error');
+            console.error('Error loading data:', error);
+        } finally {
+            toggleLoader(false);
         }
     }
 
     function saveData() {
-        localStorage.setItem('fitnessMeasurements', JSON.stringify(measurements));
-        localStorage.setItem('fitnessWorkouts', JSON.stringify(workouts));
+        toggleLoader(true);
+        
+        try {
+            localStorage.setItem('fitnessMeasurements', JSON.stringify(measurements));
+            localStorage.setItem('fitnessWorkouts', JSON.stringify(workouts));
+            showNotification('Данные успешно сохранены', 'success');
+        } catch (error) {
+            showNotification('Ошибка при сохранении данных', 'error');
+            console.error('Error saving data:', error);
+        } finally {
+            toggleLoader(false);
+        }
     }
 
     function setupEventListeners() {
@@ -168,33 +200,27 @@ document.addEventListener('DOMContentLoaded', function() {
         workoutForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const date = this['workout-date'].value;
-            const type = this['workout-type'].value;
+            const workoutDate = document.getElementById('workout-date').value;
+            const workoutName = document.getElementById('workout-name').value.trim();
             
-            // Сбор данных об упражнениях
-            const exercises = Array.from(exercisesContainer.querySelectorAll('.exercise')).map(exercise => {
-                const inputs = exercise.querySelectorAll('input');
-                return {
-                    name: inputs[0].value,
-                    sets: parseInt(inputs[1].value),
-                    reps: parseInt(inputs[2].value),
-                    weight: inputs[3].value ? parseFloat(inputs[3].value) : 0
-                };
-            });
+            if (!workoutDate || !workoutName) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
             
             const newWorkout = {
                 id: Date.now(),
-                date: date,
-                type: type,
-                exercises: exercises
+                date: workoutDate,
+                name: workoutName,
+                exercises: []
             };
             
             workouts.push(newWorkout);
             saveData();
             this.reset();
-            exercisesContainer.innerHTML = '';
-            updateUI();
-            showSuccessMessage('Тренеровка успешно сохранена!');
+            renderCalendar();
+            showWorkoutDetails(new Date(workoutDate));
+            showSuccessMessage('Тренировка успешно создана!');
         });
 
         // Удаление замеров и тренировок
@@ -210,6 +236,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateUI();
                 }
             }
+        });
+
+        // Календарь
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+        
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
         });
     }
 
@@ -366,17 +403,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 ]
             },
             options: {
-                responsive: true,
+                responsive: true, // 1. Делаем график адаптивным
+                maintainAspectRatio: false, // 2. Отключаем фиксированные пропорции
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: 'bottom' // 3. Переносим легенду вниз
                     },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
+                        // 4. Настройки для мобильных:
+                        bodyFont: {
+                            size: 14 // Увеличиваем шрифт подсказок
+                        }
                     }
                 },
+                // 5. Адаптация осей:
                 scales: {
+                    x: {
+                        ticks: {
+                            maxRotation: 45, // Наклон подписей на мобильных
+                            minRotation: 45
+                        }
+                    },
                     y: {
                         beginAtZero: false
                     }
@@ -394,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showSuccessMessage(message) {
-        alert(message);
+        showNotification(message, 'success');
     }
 
     // Вспомогательные функции
@@ -421,4 +470,188 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return types[type] || type;
     }
+
+    function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        
+        // Обновляем заголовок календаря
+        currentMonthElement.textContent = new Date(year, month).toLocaleString('ru', {
+            month: 'long',
+            year: 'numeric'
+        });
+        
+        // Очищаем календарь
+        calendarGrid.innerHTML = '';
+        
+        // Получаем первый день месяца и количество дней
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+        
+        // Добавляем дни предыдущего месяца
+        const prevMonthLastDay = new Date(year, month, 0).getDate();
+        for (let i = startingDay - 1; i >= 0; i--) {
+            const day = document.createElement('div');
+            day.className = 'calendar-day other-month';
+            day.textContent = prevMonthLastDay - i;
+            calendarGrid.appendChild(day);
+        }
+        
+        // Добавляем дни текущего месяца
+        for (let i = 1; i <= daysInMonth; i++) {
+            const day = document.createElement('div');
+            day.className = 'calendar-day';
+            day.textContent = i;
+            
+            const date = new Date(year, month, i);
+            const dateString = date.toISOString().split('T')[0];
+            
+            // Проверяем, есть ли тренировки в этот день
+            const hasWorkout = workouts.some(workout => 
+                new Date(workout.date).toISOString().split('T')[0] === dateString
+            );
+            
+            if (hasWorkout) {
+                day.classList.add('has-workout');
+            }
+            
+            if (selectedDate && dateString === selectedDate.toISOString().split('T')[0]) {
+                day.classList.add('selected');
+            }
+            
+            day.addEventListener('click', () => {
+                selectedDate = date;
+                renderCalendar();
+                showWorkoutDetails(date);
+            });
+            
+            calendarGrid.appendChild(day);
+        }
+        
+        // Добавляем дни следующего месяца
+        const remainingDays = 42 - (startingDay + daysInMonth);
+        for (let i = 1; i <= remainingDays; i++) {
+            const day = document.createElement('div');
+            day.className = 'calendar-day other-month';
+            day.textContent = i;
+            calendarGrid.appendChild(day);
+        }
+        
+        // Добавляем выделение текущего дня
+        const today = new Date();
+        if (today.getMonth() === currentDate.getMonth() && 
+            today.getFullYear() === currentDate.getFullYear()) {
+            const todayCell = calendarGrid.children[startingDay + today.getDate() - 1];
+            if (todayCell) {
+                todayCell.classList.add('today');
+            }
+        }
+    }
+
+    function showWorkoutDetails(date) {
+        const dateString = date.toISOString().split('T')[0];
+        const dayWorkouts = workouts.filter(workout => 
+            new Date(workout.date).toISOString().split('T')[0] === dateString
+        );
+        
+        if (dayWorkouts.length === 0) {
+            selectedWorkoutInfo.innerHTML = '<p>В этот день тренировок не было</p>';
+            return;
+        }
+        
+        let html = '<div class="workout-details-list">';
+        dayWorkouts.forEach(workout => {
+            html += `
+                <div class="workout-detail-item">
+                    <h4>${workout.name}</h4>
+                    <div class="exercises-list">
+                        <h5>Упражнения:</h5>
+                        <ul>
+                            ${workout.exercises ? workout.exercises.map(ex => `
+                                <li>${ex.name}: ${ex.sets} подходов по ${ex.reps} повторений</li>
+                            `).join('') : ''}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        selectedWorkoutInfo.innerHTML = html;
+        
+        // Устанавливаем дату в форме создания тренировки
+        document.getElementById('workout-date').value = dateString;
+    }
+
+    // Функция для показа уведомлений
+    function showNotification(message, type = 'default') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        document.getElementById('notifications').appendChild(notification);
+        
+        // Автоматическое скрытие через 3 секунды
+        setTimeout(() => {
+            notification.style.transform = 'translateX(120%)';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+        
+        // Закрытие по клику
+        notification.addEventListener('click', () => {
+            notification.style.transform = 'translateX(120%)';
+            setTimeout(() => notification.remove(), 300);
+        });
+    }
+
+    // Функция для показа/скрытия лоадера
+    function toggleLoader(show = true) {
+        const loader = document.getElementById('loader');
+        if (show) {
+            loader.classList.add('active');
+        } else {
+            loader.classList.remove('active');
+        }
+    }
+
+    // Добавляем подсказки к кнопкам
+    document.querySelectorAll('button').forEach(button => {
+        if (button.innerHTML.includes('fa-')) {
+            const icon = button.querySelector('i');
+            const text = button.textContent.trim();
+            if (text) {
+                button.setAttribute('data-tooltip', text);
+            }
+        }
+    });
+
+    // Улучшенная обработка форм
+    document.querySelectorAll('form').forEach(form => {
+        const inputs = form.querySelectorAll('input, select');
+        
+        inputs.forEach(input => {
+            // Сохранение значений в localStorage
+            input.addEventListener('change', () => {
+                localStorage.setItem(`form-${form.id}-${input.id}`, input.value);
+            });
+            
+            // Восстановление значений из localStorage
+            const savedValue = localStorage.getItem(`form-${form.id}-${input.id}`);
+            if (savedValue) {
+                input.value = savedValue;
+            }
+        });
+        
+        // Очистка сохраненных значений после отправки формы
+        form.addEventListener('submit', () => {
+            inputs.forEach(input => {
+                localStorage.removeItem(`form-${form.id}-${input.id}`);
+            });
+        });
+    });
 });

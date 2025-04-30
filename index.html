@@ -3,134 +3,1106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Фитнес-Трекер</title>
+    <title>MASK-Fitness Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary: #4895ef;
+            --secondary: #4361ee;
+            --accent: #3f37c9;
+            --light: #212529;
+            --dark: #f8f9fa;
+            --card-bg: #2b2d42;
+            --shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .theme-toggle {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--accent);
+            color: white;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        button.secondary {
+            background: var(--accent);
+        }
+
+        button.danger {
+            background: var(--danger);
+        }
+
+        .workout-item {
+            margin-bottom: 30px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .workout-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .workout-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .exercise-list {
+            background: var(--card-bg);
+            padding: 0;
+        }
+
+        .exercise-item {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .exercise-item:last-child {
+            border-bottom: none;
+        }
+
+        .exercise-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .sets-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .sets-table th, .sets-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .sets-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+
+        .sets-table tr:nth-child(even) {
+            background: rgba(0,0,0,0.03);
+        }
+
+        .exercise-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(0,0,0,0.1);
+        }
+
+        .stat {
+            background: var(--light);
+            padding: 8px 12px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .progress-entry {
+            position: relative;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: var(--light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .set-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .set-number {
+            font-weight: 600;
+            min-width: 30px;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .motivation-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+
+        .motivation-text {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .refresh-motivation {
+            background: white;
+            color: var(--primary);
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .exercise-stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stat {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
-        <header class="header">
-            <div class="progress-container">
-                <h1>Мой Прогресс</h1>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <p class="motivation-text" id="motivation-text">Ты на правильном пути!</p>
+        <header>
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <h1>MASK-Fitness</h1>
             </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+                <span>Темная тема</span>
+            </button>
         </header>
 
-        <main class="main-content">
-            <nav class="nav-tabs">
-                <button class="tab-btn active" data-tab="measurements"><i class="fas fa-tape"></i> Замеры</button>
-                <button class="tab-btn" data-tab="workouts"><i class="fas fa-dumbbell"></i> Тренировки</button>
-                <button class="tab-btn" data-tab="stats"><i class="fas fa-chart-line"></i> Статистика</button>
-            </nav>
+        <div class="tabs">
+            <button class="tab active" data-page="progress">
+                <i class="fas fa-chart-line"></i>
+                Прогресс
+            </button>
+            <button class="tab" data-page="workouts">
+                <i class="fas fa-dumbbell"></i>
+                Тренировки
+            </button>
+            <button class="tab" data-page="motivation">
+                <i class="fas fa-fire"></i>
+                Мотивация
+            </button>
+        </div>
 
-            <section id="measurements" class="tab-content active">
-                <form id="measurement-form">
-                    <h2><i class="fas fa-plus-circle"></i> Новый замер</h2>
-                    <div class="form-group">
-                        <label for="measurement-date">Дата:</label>
-                        <input type="date" id="measurement-date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="weight">Вес (кг):</label>
-                        <input type="number" id="weight" step="0.1" min="30" max="200" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="waist">Талия (см):</label>
-                        <input type="number" id="waist" step="0.1" min="50" max="150" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="biceps">Бицепс (см):</label>
-                        <input type="number" id="biceps" step="0.1" min="10" max="60">
-                    </div>
-                    <div class="form-group">
-                        <label for="thigh">Бедро (см):</label>
-                        <input type="number" id="thigh" step="0.1" min="30" max="100">
-                    </div>
-                    <div class="form-group">
-                        <label for="hips">Ягодицы (см):</label>
-                        <input type="number" id="hips" step="0.1" min="50" max="150">
-                    </div>
-                    <div class="form-group">
-                        <label for="chest">Грудь (см):</label>
-                        <input type="number" id="chest" step="0.1" min="50" max="150">
-                    </div>
-                    <div class="form-group">
-                        <label for="height">Рост (см):</label>
-                        <input type="number" id="height" step="0.1" min="100" max="250">
-                    </div>
-                    <button type="submit" class="submit-btn">Сохранить замер</button>
-                </form>
-
-                <div class="measurements-list">
-                    <h2><i class="fas fa-history"></i> История замеров</h2>
-                    <ul id="measurements-list"></ul>
-                </div>
-            </section>
-
-            <section id="workouts" class="tab-content">
-                <form id="workout-form">
-                    <h2><i class="fas fa-plus-circle"></i> Новая тренировка</h2>
-                    <div class="form-group">
-                        <label for="workout-date">Дата:</label>
-                        <input type="date" id="workout-date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="workout-type">Тип тренировки:</label>
-                        <select id="workout-type" required>
-                            <option value="strength">Силовая</option>
-                            <option value="cardio">Кардио</option>
-                            <option value="flexibility">Гибкость</option>
-                        </select>
-                    </div>
-                    
-                    <div id="exercises-container">
-                        <!-- Упражнения будут добавляться здесь -->
-                    </div>
-                    
-                    <button type="button" id="add-exercise" class="add-btn">
-                        <i class="fas fa-plus"></i> Добавить упражнение
-                    </button>
-                    <button type="submit" class="submit-btn">Сохранить тренировку</button>
-                </form>
-
-                <div class="workouts-list">
-                    <h2><i class="fas fa-history"></i> История тренировок</h2>
-                    <ul id="workouts-list"></ul>
-                </div>
-            </section>
-
-            <section id="stats" class="tab-content">
-                <div class="stats-container">
-                    <h2><i class="fas fa-chart-pie"></i> Ваша статистика</h2>
-                    <div class="stats-cards">
-                        <div class="stat-card">
-                            <h3>Последний вес</h3>
-                            <p id="last-weight">-</p>
+        <main>
+            <!-- Страница прогресса -->
+            <div class="page active" id="progress-page">
+                <div class="card">
+                    <h2><i class="fas fa-plus-circle"></i> Добавить данные</h2>
+                    <form id="progress-form">
+                        <div class="form-group">
+                            <label for="progress-date">Дата</label>
+                            <input type="date" id="progress-date" required>
                         </div>
-                        <div class="stat-card">
-                            <h3>Изменение веса</h3>
-                            <p id="weight-change">-</p>
+                        
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label for="weight">Вес (кг)</label>
+                                <input type="number" id="weight" step="0.1" placeholder="Введите ваш вес">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="height">Рост (см)</label>
+                                <input type="number" id="height" placeholder="Ваш рост">
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <h3>Всего тренировок</h3>
-                            <p id="total-workouts">0</p>
+                        
+                        <h3 style="margin: 20px 0 15px; color: var(--primary);">Обхваты (см)</h3>
+                        
+                        <div class="grid-2-col">
+                            <div class="form-group">
+                                <label for="waist">Талия</label>
+                                <input type="number" id="waist" step="0.1" placeholder="Обхват талии">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="chest">Грудь</label>
+                                <input type="number" id="chest" step="0.1" placeholder="Обхват груди">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="hips">Ягодицы</label>
+                                <input type="number" id="hips" step="0.1" placeholder="Обхват ягодиц">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="biceps">Бицепс</label>
+                                <input type="number" id="biceps" step="0.1" placeholder="Обхват бицепса">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="thigh">Бедро</label>
+                                <input type="number" id="thigh" step="0.1" placeholder="Обхват бедра">
+                            </div>
+                        </div>
+                        
+                        <button type="submit">
+                            <i class="fas fa-save"></i>
+                            Сохранить
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2><i class="fas fa-history"></i> История прогресса</h2>
+                    <div id="progress-list"></div>
+                </div>
+            </div>
+
+            <!-- Страница тренировок -->
+            <div class="page" id="workouts-page">
+                <div class="tab-content" id="workouts">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="current-month">Месяц Год</h3>
+                            <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Календарь будет заполнен через JavaScript -->
                         </div>
                     </div>
-                    <canvas id="progress-chart"></canvas>
+                    <div class="workout-details" id="workout-details">
+                        <h3>Детали тренировки</h3>
+                        <div id="selected-workout-info"></div>
+                    </div>
+                    <form id="workout-form">
+                        <div class="form-group">
+                            <label for="workout-date">Дата тренировки</label>
+                            <input type="date" id="workout-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="workout-name">Название тренировки</label>
+                            <input type="text" id="workout-name" placeholder="Например: Грудь и трицепс" required>
+                        </div>
+                        <button type="submit">
+                            <i class="fas fa-plus"></i>
+                            Создать тренировку
+                        </button>
+                    </form>
                 </div>
-            </section>
+
+                <div class="card">
+                    <h2><i class="fas fa-dumbbell"></i> Мои тренировки</h2>
+                    <div id="workouts-list"></div>
+                </div>
+            </div>
+
+            <!-- Страница мотивации -->
+            <div class="page" id="motivation-page">
+                <div class="card">
+                    <h2><i class="fas fa-fire"></i> Твоя мотивация</h2>
+                    <div class="motivation-card">
+                        <p class="motivation-text" id="motivation-text"></p>
+                        <button class="refresh-motivation" id="refresh-motivation">
+                            <i class="fas fa-sync-alt"></i>
+                            Новая мотивация
+                        </button>
+                    </div>
+                </div>
+            </div>
         </main>
 
-        <footer class="footer">
-            <p id="daily-motivation">"Сегодня - лучший день для нового рекорда!"</p>
-        </footer>
+        <!-- Модальное окно добавления упражнения -->
+        <div class="modal" id="exercise-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exercise-modal-title">Добавить упражнение</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <form id="exercise-form">
+                    <div class="form-group">
+                        <label for="exercise-name">Название упражнения</label>
+                        <input type="text" id="exercise-name" placeholder="Например: Жим штанги лежа" required>
+                    </div>
+                    
+                    <div id="exercise-sets"></div>
+                    
+                    <button type="button" class="secondary" id="add-set-btn">
+                        <i class="fas fa-plus"></i>
+                        Добавить подход
+                    </button>
+                    
+                    <div class="form-actions" style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="button" class="danger" id="cancel-exercise">
+                            <i class="fas fa-times"></i>
+                            Отмена
+                        </button>
+                        <button type="submit">
+                            <i class="fas fa-save"></i>
+                            Сохранить упражнение
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <!-- Лоадер -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader">
+            <svg viewBox="0 0 80 80">
+                <circle id="loader-circle" cx="40" cy="40" r="32"></circle>
+            </svg>
+            <div class="loader-text">Загрузка...</div>
+        </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div class="notifications-container" id="notifications"></div>
+
+    <script>
+        // Данные приложения
+        const appData = {
+            theme: localStorage.getItem('theme') || 'light',
+            workouts: JSON.parse(localStorage.getItem('workouts')) || {},
+            progress: JSON.parse(localStorage.getItem('progress')) || [],
+            motivationalPhrases: [
+                "Твой единственный лимит - это ты сам!",
+                "Сегодняшняя боль - завтрашняя сила.",
+                "Не останавливайся, когда тяжело. Останавливайся, когда закончил.",
+                "Успех - это сумма маленьких усилий, повторяемых изо дня в день.",
+                "Будь сильнее своих отговорок.",
+                "Мечты не работают, пока не работаешь ты.",
+                "Начни там, где ты есть. Используй то, что у тебя есть.",
+                "Каждый день - новая возможность стать лучше.",
+                "Ты ближе к своей цели, чем был вчера.",
+                "Сила - не в мышцах, а в силе духа."
+            ],
+            currentWorkout: null
+        };
+
+        // Инициализация приложения
+        function initApp() {
+            // Установка темы
+            setTheme(appData.theme);
+            
+            // Инициализация страниц
+            initPages();
+            
+            // Инициализация модального окна
+            initExerciseModal();
+            
+            // Загрузка данных
+            loadProgressPage();
+            loadWorkoutsPage();
+            loadMotivationPage();
+            
+            // Обновление мотивационной фразы
+            updateMotivationalPhrase();
+        }
+
+        // Установка темы
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            const themeToggle = document.getElementById('theme-toggle');
+            if (theme === 'dark') {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Светлая тема</span>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Темная тема</span>';
+            }
+        }
+
+        // Переключение темы
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+
+        // Инициализация страниц
+        function initPages() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Убираем активный класс у всех вкладок
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущей вкладке
+                    this.classList.add('active');
+                    
+                    // Скрываем все страницы
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Показываем выбранную страницу
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+        }
+
+        // Загрузка страницы прогресса
+        function loadProgressPage() {
+            const progressForm = document.getElementById('progress-form');
+            progressForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const date = document.getElementById('progress-date').value;
+                const weight = document.getElementById('weight').value;
+                const height = document.getElementById('height').value;
+                const waist = document.getElementById('waist').value;
+                const chest = document.getElementById('chest').value;
+                const hips = document.getElementById('hips').value;
+                const biceps = document.getElementById('biceps').value;
+                const thigh = document.getElementById('thigh').value;
+                
+                if (!date) {
+                    alert('Пожалуйста, укажите дату');
+                    return;
+                }
+                
+                const progressEntry = {
+                    date,
+                    weight,
+                    height,
+                    waist,
+                    chest,
+                    hips,
+                    biceps,
+                    thigh
+                };
+                
+                // Проверяем, есть ли уже запись на эту дату
+                const existingIndex = appData.progress.findIndex(p => p.date === date);
+                if (existingIndex !== -1) {
+                    appData.progress[existingIndex] = progressEntry;
+                } else {
+                    appData.progress.push(progressEntry);
+                }
+                
+                // Сортируем по дате (новые сверху)
+                appData.progress.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // Сохраняем
+                localStorage.setItem('progress', JSON.stringify(appData.progress));
+                renderProgressList();
+                
+                // Очищаем форму
+                this.reset();
+            });
+            
+            renderProgressList();
+        }
+
+        // Отображение списка прогресса
+        function renderProgressList() {
+            const progressList = document.getElementById('progress-list');
+            progressList.innerHTML = '';
+            
+            if (appData.progress.length === 0) {
+                progressList.innerHTML = '<p>Нет данных о прогрессе</p>';
+                return;
+            }
+            
+            appData.progress.forEach((entry, index) => {
+                const entryElement = document.createElement('div');
+                entryElement.className = 'progress-entry';
+                
+                entryElement.innerHTML = `
+                    <button class="delete-btn" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <h3>${formatDate(entry.date)}</h3>
+                    <div class="progress-details">
+                        ${entry.weight ? `<p><strong>Вес:</strong> ${entry.weight} кг</p>` : ''}
+                        ${entry.height ? `<p><strong>Рост:</strong> ${entry.height} см</p>` : ''}
+                        <div class="grid-2-col" style="margin-top: 10px;">
+                            ${entry.waist ? `<p><strong>Талия:</strong> ${entry.waist} см</p>` : ''}
+                            ${entry.chest ? `<p><strong>Грудь:</strong> ${entry.chest} см</p>` : ''}
+                            ${entry.hips ? `<p><strong>Ягодицы:</strong> ${entry.hips} см</p>` : ''}
+                            ${entry.biceps ? `<p><strong>Бицепс:</strong> ${entry.biceps} см</p>` : ''}
+                            ${entry.thigh ? `<p><strong>Бедро:</strong> ${entry.thigh} см</p>` : ''}
+                        </div>
+                    </div>
+                `;
+                progressList.appendChild(entryElement);
+            });
+            
+            // Добавляем обработчики для кнопок удаления
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    if (confirm('Вы уверены, что хотите удалить эту запись прогресса?')) {
+                        appData.progress.splice(index, 1);
+                        localStorage.setItem('progress', JSON.stringify(appData.progress));
+                        renderProgressList();
+                    }
+                });
+            });
+        }
+
+        // Форматирование даты
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('ru-RU', options);
+        }
+
+        // Загрузка страницы тренировок
+        function loadWorkoutsPage() {
+            const workoutForm = document.getElementById('workout-form');
+            workoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const workoutDate = document.getElementById('workout-date').value;
+                const workoutName = document.getElementById('workout-name').value.trim();
+                
+                if (!workoutName) {
+                    alert('Пожалуйста, введите название тренировки');
+                    return;
+                }
+                
+                if (!appData.workouts[workoutName]) {
+                    appData.workouts[workoutName] = [];
+                }
+                
+                localStorage.setItem('workouts', JSON.stringify(appData.workouts));
+                renderWorkoutsList();
+                
+                // Очищаем форму
+                this.reset();
+            });
+            
+            renderWorkoutsList();
+        }
+
+        // Отображение списка тренировок
+        function renderWorkoutsList() {
+            const workoutsList = document.getElementById('workouts-list');
+            workoutsList.innerHTML = '';
+            
+            if (Object.keys(appData.workouts).length === 0) {
+                workoutsList.innerHTML = '<p>Нет созданных тренировок</p>';
+                return;
+            }
+            
+            for (const [workoutName, exercises] of Object.entries(appData.workouts)) {
+                const workoutElement = document.createElement('div');
+                workoutElement.className = 'workout-item';
+                workoutElement.innerHTML = `
+                    <div class="workout-header">
+                        <div class="workout-title">${workoutName}</div>
+                        <button class="add-exercise-btn" data-workout="${workoutName}">
+                            <i class="fas fa-plus"></i> Добавить упражнение
+                        </button>
+                    </div>
+                    <div class="exercise-list" id="exercises-${workoutName.replace(/\s+/g, '-')}"></div>
+                `;
+                workoutsList.appendChild(workoutElement);
+                
+                renderExercisesList(workoutName, exercises);
+            }
+            
+            // Обработчики кнопок добавления упражнений
+            document.querySelectorAll('.add-exercise-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    appData.currentWorkout = this.getAttribute('data-workout');
+                    document.getElementById('exercise-modal-title').textContent = 
+                        `Добавить упражнение в ${appData.currentWorkout}`;
+                    document.getElementById('exercise-modal').classList.add('active');
+                });
+            });
+        }
+
+        // Отображение списка упражнений
+        function renderExercisesList(workoutName, exercises) {
+            const exercisesContainer = document.getElementById(`exercises-${workoutName.replace(/\s+/g, '-')}`);
+            exercisesContainer.innerHTML = '';
+            
+            if (exercises.length === 0) {
+                exercisesContainer.innerHTML = '<p style="padding: 20px; text-align: center;">Нет упражнений</p>';
+                return;
+            }
+            
+            exercises.forEach((exercise, exerciseIndex) => {
+                const exerciseElement = document.createElement('div');
+                exerciseElement.className = 'exercise-item';
+                
+                // Сортируем подходы по весу (от большего к меньшему)
+                const sortedSets = [...exercise.sets].sort((a, b) => b.weight - a.weight);
+                const maxWeight = sortedSets[0]?.weight || 0;
+                const totalVolume = sortedSets.reduce((sum, set) => sum + (set.weight * set.reps), 0);
+                
+                exerciseElement.innerHTML = `
+                    <div class="exercise-name">
+                        <span>${exercise.name}</span>
+                    </div>
+                    
+                    <button class="delete-btn" data-workout="${workoutName}" data-index="${exerciseIndex}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    
+                    <table class="sets-table">
+                        <thead>
+                            <tr>
+                                <th>Подход</th>
+                                <th>Вес (кг)</th>
+                                <th>Повторения</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedSets.map((set, index) => `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${set.weight || '0'}</td>
+                                    <td>${set.reps || '0'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    
+                    <div class="exercise-stats">
+                        <div class="stat">
+                            <i class="fas fa-layer-group"></i> Подходов: ${sortedSets.length}
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-weight-hanging"></i> Макс. вес: ${maxWeight} кг
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calculator"></i> Объем: ${totalVolume} кг
+                        </div>
+                    </div>
+                `;
+                
+                exercisesContainer.appendChild(exerciseElement);
+            });
+            
+            // Обработчики кнопок удаления упражнений
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workoutName = this.getAttribute('data-workout');
+                    const exerciseIndex = parseInt(this.getAttribute('data-index'));
+                    
+                    if (confirm('Вы уверены, что хотите удалить это упражнение?')) {
+                        appData.workouts[workoutName].splice(exerciseIndex, 1);
+                        localStorage.setItem('workouts', JSON.stringify(appData.workouts));
+                        renderWorkoutsList();
+                    }
+                });
+            });
+        }
+
+        // Инициализация модального окна упражнений
+        function initExerciseModal() {
+            const modal = document.getElementById('exercise-modal');
+            const closeBtn = document.querySelector('.close-modal');
+            const cancelBtn = document.getElementById('cancel-exercise');
+            const addSetBtn = document.getElementById('add-set-btn');
+            const exerciseForm = document.getElementById('exercise-form');
+            
+            // Закрытие модального окна
+            [closeBtn, cancelBtn].forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modal.classList.remove('active');
+                    document.getElementById('exercise-sets').innerHTML = '';
+                    exerciseForm.reset();
+                });
+            });
+            
+            // Закрытие при клике вне модального окна
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.getElementById('exercise-sets').innerHTML = '';
+                    exerciseForm.reset();
+                }
+            });
+            
+            // Добавление подхода
+            addSetBtn.addEventListener('click', function() {
+                const setsContainer = document.getElementById('exercise-sets');
+                const setNumber = setsContainer.children.length + 1;
+                
+                const setElement = document.createElement('div');
+                setElement.className = 'set-item';
+                setElement.innerHTML = `
+                    <div class="set-number">${setNumber}.</div>
+                    <input type="number" class="set-weight" placeholder="Вес (кг)" step="0.1" required>
+                    <span>×</span>
+                    <input type="number" class="set-reps" placeholder="Повторения" required>
+                `;
+                
+                setsContainer.appendChild(setElement);
+            });
+            
+            // Сохранение упражнения
+            exerciseForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const exerciseName = document.getElementById('exercise-name').value.trim();
+                if (!exerciseName) {
+                    alert('Пожалуйста, введите название упражнения');
+                    return;
+                }
+                
+                const sets = Array.from(document.querySelectorAll('.set-item')).map(set => {
+                    return {
+                        weight: parseFloat(set.querySelector('.set-weight').value) || 0,
+                        reps: parseInt(set.querySelector('.set-reps').value) || 0
+                    };
+                });
+                
+                if (sets.length === 0) {
+                    alert('Пожалуйста, добавьте хотя бы один подход');
+                    return;
+                }
+                
+                const exercise = {
+                    name: exerciseName,
+                    sets: sets
+                };
+                
+                appData.workouts[appData.currentWorkout].push(exercise);
+                localStorage.setItem('workouts', JSON.stringify(appData.workouts));
+                
+                modal.classList.remove('active');
+                this.reset();
+                document.getElementById('exercise-sets').innerHTML = '';
+                
+                renderWorkoutsList();
+            });
+        }
+
+        // Загрузка страницы мотивации
+        function loadMotivationPage() {
+            document.getElementById('refresh-motivation').addEventListener('click', function() {
+                updateMotivationalPhrase();
+            });
+        }
+
+        // Обновление мотивационной фразы
+        function updateMotivationalPhrase() {
+            const randomIndex = Math.floor(Math.random() * appData.motivationalPhrases.length);
+            document.getElementById('motivation-text').textContent = appData.motivationalPhrases[randomIndex];
+        }
+
+        // Запуск приложения
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
 </body>
 </html>
