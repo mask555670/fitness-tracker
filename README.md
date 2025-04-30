@@ -1,49 +1,49 @@
-# MaskFit - Fitness Tracker
+# MaskFit - Трекер Фитнеса
 
-Web application for tracking workouts and fitness progress.
+Веб-приложение для отслеживания тренировок и прогресса в фитнесе.
 
-## Features
+## Возможности
 
-- Workout tracking
-- Workout calendar
-- Progress measurement
-- Motivational messages
-- Dark/light theme
-- Workout statistics
-- Personal records
-- Comparative analysis
-- Predictions and recommendations
+- Отслеживание тренировок
+- Календарь тренировок
+- Замеры прогресса
+- Мотивирующие сообщения
+- Темная/светлая тема
+- Статистика тренировок
+- Личные рекорды
+- Сравнительный анализ
+- Прогнозы и рекомендации
 
-## Technologies
+## Технологии
 
 - HTML5
-- CSS3 (using modern features)
+- CSS3 (с использованием современных возможностей)
 - JavaScript (Vanilla JS)
-- LocalStorage for data storage
+- LocalStorage для хранения данных
 
-## Installation and Setup
+## Установка и Настройка
 
-1. Clone the repository:
+1. Клонируйте репозиторий:
 ```bash
 git clone https://github.com/YOUR_USERNAME/MaskFit.git
 ```
 
-2. Open `index.html` in your browser
+2. Откройте `index.html` в вашем браузере
 
-## Usage
+## Использование
 
-- Create and track workouts
-- Record body measurements
-- Monitor progress
-- Get motivational messages
-- Analyze statistics
-- Track personal records
-- Get workout recommendations
+- Создавайте и отслеживайте тренировки
+- Записывайте замеры тела
+- Следите за прогрессом
+- Получайте мотивирующие сообщения
+- Анализируйте статистику
+- Отслеживайте личные рекорды
+- Получайте рекомендации по тренировкам
 
-## Author
+## Автор
 
-[Your Name]
+[Ваше Имя]
 
-## License
+## Лицензия
 
 MIT 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MASK-Fitness Tracker</title>
+    <title>MASK-Fitness Трекер</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,12 +48,32 @@
             transition: var(--transition);
             min-height: 100vh;
             padding: 20px;
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.9) 0%, rgba(63, 55, 201, 0.9) 100%);
+            z-index: -1;
         }
 
         .app-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         header {
@@ -77,17 +97,19 @@
         }
 
         .logo h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .theme-toggle {
-            background: var(--primary);
-            color: white;
-            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
             padding: 8px 15px;
             border-radius: 50px;
             cursor: pointer;
@@ -99,8 +121,8 @@
         }
 
         .theme-toggle:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
+            background: var(--primary);
+            color: white;
         }
 
         .tabs {
@@ -113,8 +135,9 @@
 
         .tab {
             padding: 12px 25px;
-            background: var(--card-bg);
-            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
@@ -129,6 +152,7 @@
         .tab.active {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
         }
 
         .tab:hover:not(.active) {
@@ -146,12 +170,13 @@
         }
 
         .card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: var(--radius);
             padding: 25px;
             margin-bottom: 25px;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .card:hover {
@@ -223,6 +248,9 @@
         }
 
         .workout-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
             margin-bottom: 30px;
             border-radius: var(--radius);
             overflow: hidden;
@@ -230,7 +258,7 @@
         }
 
         .workout-header {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 15px 20px;
             display: flex;
@@ -329,10 +357,12 @@
         }
 
         .progress-entry {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
             position: relative;
             padding: 20px;
             margin-bottom: 15px;
-            background: var(--light);
             border-radius: var(--radius);
             box-shadow: var(--shadow-light);
         }
@@ -359,7 +389,9 @@
         }
 
         .modal-content {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--radius);
             width: 90%;
             max-width: 500px;
@@ -431,6 +463,27 @@
             color: white;
             border-radius: var(--radius);
             margin-top: 20px;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motivation-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+            animation: shine 8s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(30deg) translateX(-100%); }
+            100% { transform: rotate(30deg) translateX(100%); }
         }
 
         .motivation-text {
@@ -476,6 +529,29 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        [data-theme="dark"] .app-container {
+            background: rgba(43, 45, 66, 0.95);
+        }
+
+        [data-theme="dark"] .card,
+        [data-theme="dark"] .tab,
+        [data-theme="dark"] .progress-entry,
+        [data-theme="dark"] .workout-item,
+        [data-theme="dark"] .modal-content {
+            background: rgba(43, 45, 66, 0.9);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: rgba(43, 45, 66, 0.9);
+            color: var(--accent);
+        }
+
+        [data-theme="dark"] .theme-toggle:hover {
+            background: var(--accent);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -487,26 +563,26 @@
             </div>
             <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
-                <span>Dark Theme</span>
+                <span>Темная тема</span>
             </button>
         </header>
 
         <div class="tabs">
             <button class="tab active" data-page="progress">
                 <i class="fas fa-chart-line"></i>
-                Progress
+                Прогресс
             </button>
             <button class="tab" data-page="workouts">
                 <i class="fas fa-dumbbell"></i>
-                Workouts
+                Тренировки
             </button>
             <button class="tab" data-page="statistics">
                 <i class="fas fa-chart-bar"></i>
-                Statistics
+                Статистика
             </button>
             <button class="tab" data-page="motivation">
                 <i class="fas fa-fire"></i>
-                Motivation
+                Мотивация
             </button>
         </div>
 
@@ -577,37 +653,27 @@
 
             <!-- Страница тренировок -->
             <div class="page" id="workouts-page">
-                <div class="tab-content" id="workouts">
-                    <div class="calendar-container">
-                        <div class="workout-details" id="workout-details">
-                            <h3>Детали тренировки</h3>
-                            <div id="selected-workout-info"></div>
+                <div class="card">
+                    <h2><i class="fas fa-plus-circle"></i> Создать тренировку</h2>
+                    <form id="workout-form">
+                        <div class="form-group">
+                            <label for="workout-date">Дата тренировки</label>
+                            <input type="date" id="workout-date" required>
                         </div>
-                        <form id="workout-form">
-                            <div class="form-group">
-                                <label for="workout-date">Workout Date</label>
-                                <input type="date" id="workout-date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="workout-name">Workout Name</label>
-                                <input type="text" id="workout-name" placeholder="e.g., Chest and Triceps" required>
-                            </div>
-                            <button type="submit">
-                                <i class="fas fa-plus"></i>
-                                Create Workout
-                            </button>
-                        </form>
-                    </div>
+                        <div class="form-group">
+                            <label for="workout-name">Название тренировки</label>
+                            <input type="text" id="workout-name" placeholder="Например, Грудь и Трицепс" required>
+                        </div>
+                        <button type="submit">
+                            <i class="fas fa-plus"></i>
+                            Создать тренировку
+                        </button>
+                    </form>
+                </div>
 
-                    <div class="workout-details" id="workout-details">
-                        <h3>Детали тренировки</h3>
-                        <div id="selected-workout-info"></div>
-                    </div>
-
-                    <div class="card">
-                        <h2><i class="fas fa-dumbbell"></i> Мои тренировки</h2>
-                        <div id="workouts-list"></div>
-                    </div>
+                <div class="card">
+                    <h2><i class="fas fa-dumbbell"></i> Мои тренировки</h2>
+                    <div id="workouts-list"></div>
                 </div>
             </div>
 
@@ -732,25 +798,25 @@
                 </div>
                 <form id="exercise-form">
                     <div class="form-group">
-                        <label for="exercise-name">Exercise Name</label>
-                        <input type="text" id="exercise-name" placeholder="e.g., Bench Press" required>
+                        <label for="exercise-name">Название упражнения</label>
+                        <input type="text" id="exercise-name" placeholder="Например, Жим лежа" required>
                     </div>
                     
                     <div id="exercise-sets"></div>
                     
                     <button type="button" class="secondary" id="add-set-btn">
                         <i class="fas fa-plus"></i>
-                        Add Set
+                        Добавить подход
                     </button>
                     
                     <div class="form-actions" style="display: flex; gap: 10px; margin-top: 20px;">
                         <button type="button" class="danger" id="cancel-exercise">
                             <i class="fas fa-times"></i>
-                            Cancel
+                            Отмена
                         </button>
                         <button type="submit">
                             <i class="fas fa-save"></i>
-                            Save Exercise
+                            Сохранить упражнение
                         </button>
                     </div>
                 </form>

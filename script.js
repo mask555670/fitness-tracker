@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Проверка поддержки localStorage
     if (!window.localStorage) {
-        alert('Your browser does not support localStorage. Data will not be saved.');
+        alert('Ваш браузер не поддерживает localStorage. Данные не будут сохранены.');
     }
 
     // DOM элементы
@@ -35,18 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentDate = new Date();
     let selectedDate = null;
 
-    // Мотивирующие сообщения
-    const motivationMessages = [
-        "Ты молодец! Продолжай в том же духе!",
-        "Каждый шаг приближает тебя к цели!",
-        "Ты становишься лучше с каждым днём!",
-        "Сила — в постоянстве!",
-        "Сегодня ты на шаг ближе к своей мечте!",
-        "Твой прогресс впечатляет!",
-        "Не останавливайся на достигнутом!",
-        "Ты вдохновляешь окружающих!",
-        "С каждым днём ты сильнее!",
-        "Верь в себя — у тебя всё получится!"
+    // Массив мотивационных сообщений
+    const motivationalMessages = [
+        "Ты сильнее, чем думаешь! 💪",
+        "Каждый день - это новый шанс стать лучше! 🌟",
+        "Твой прогресс вдохновляет других! 🔥",
+        "Помни, почему ты начал! 🎯",
+        "Ты ближе к цели, чем вчера! 🏆",
+        "Твоя сила растет с каждым днем! 💫",
+        "Ты создаешь лучшую версию себя! 🌈",
+        "Твой труд сегодня - твой успех завтра! ⭐",
+        "Ты способен на большее! 🚀",
+        "Каждая капля пота - шаг к победе! 💦"
     ];
 
     const dailyMotivations = [
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Данные успешно загружены', 'success');
         } catch (error) {
             showNotification('Ошибка при загрузке данных', 'error');
-            console.error('Error loading data:', error);
+            console.error('Ошибка загрузки данных:', error);
         } finally {
             toggleLoader(false);
         }
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Данные успешно сохранены', 'success');
         } catch (error) {
             showNotification('Ошибка при сохранении данных', 'error');
-            console.error('Error saving data:', error);
+            console.error('Ошибка сохранения данных:', error);
         } finally {
             toggleLoader(false);
         }
@@ -333,20 +333,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateStats() {
         if (measurements.length > 0) {
             const lastMeasurement = measurements[measurements.length - 1];
-            lastWeightElement.textContent = `${lastMeasurement.weight} kg`;
+            lastWeightElement.textContent = `${lastMeasurement.weight} кг`;
             
             if (measurements.length > 1) {
                 const firstMeasurement = measurements[0];
                 const weightDiff = (lastMeasurement.weight - firstMeasurement.weight).toFixed(1);
                 
                 if (weightDiff > 0) {
-                    weightChangeElement.textContent = `+${weightDiff} kg`;
+                    weightChangeElement.textContent = `+${weightDiff} кг`;
                     weightChangeElement.style.color = 'var(--danger)';
                 } else if (weightDiff < 0) {
-                    weightChangeElement.textContent = `${weightDiff} kg`;
+                    weightChangeElement.textContent = `${weightDiff} кг`;
                     weightChangeElement.style.color = 'var(--success)';
                 } else {
-                    weightChangeElement.textContent = '0 kg';
+                    weightChangeElement.textContent = '0 кг';
                     weightChangeElement.style.color = 'var(--gray)';
                 }
             } else {
@@ -435,8 +435,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showRandomMotivation() {
-        const randomIndex = Math.floor(Math.random() * motivationMessages.length);
-        if (motivationText) motivationText.textContent = motivationMessages[randomIndex];
+        const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
+        if (motivationText) motivationText.textContent = motivationalMessages[randomIndex];
         
         const dailyIndex = Math.floor(Math.random() * dailyMotivations.length);
         if (dailyMotivation) dailyMotivation.textContent = dailyMotivations[dailyIndex];
@@ -463,9 +463,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getWorkoutTypeName(type) {
         const types = {
-            strength: 'Strength',
-            cardio: 'Cardio',
-            flexibility: 'Flexibility'
+            'chest': 'Грудь',
+            'back': 'Спина',
+            'legs': 'Ноги',
+            'shoulders': 'Плечи',
+            'arms': 'Руки',
+            'core': 'Пресс',
+            'cardio': 'Кардио',
+            'fullbody': 'Фулбоди',
+            'other': 'Другое'
         };
         
         return types[type] || type;
@@ -654,4 +660,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+    function setTheme(isDark) {
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.innerHTML = isDark ? 
+            '<i class="fas fa-sun"></i> Светлая тема' : 
+            '<i class="fas fa-moon"></i> Темная тема';
+    }
 });
