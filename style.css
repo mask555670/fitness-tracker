@@ -684,51 +684,6 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--gradient-secondary);
 }
 
-/* Лоадер */
-.loader-wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  display: none;
-  background: none;
-}
-
-.loader-wrapper.active {
-  display: block;
-}
-
-.loader {
-  text-align: center;
-}
-
-.loader svg {
-  display: none;
-}
-
-.loader circle {
-  display: none;
-}
-
-.loader-text {
-  color: var(--primary);
-  font-size: 1.2rem;
-  font-weight: 500;
-  opacity: 1;
-  padding: 15px 25px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-}
-
-/* Удаляем ненужные анимации */
-@keyframes loader {
-  0%, 100% {
-      opacity: 1;
-  }
-}
-
 /* Уведомления */
 .notifications-container {
   position: fixed;
